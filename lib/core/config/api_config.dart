@@ -1,6 +1,6 @@
 class ApiConfig {
   // API Base URLs
-  static const String developmentBaseUrl = 'http://192.168.0.141:8000/api';
+  static const String developmentBaseUrl = 'http://192.168.0.140:8000/api';
   static const String productionBaseUrl = 'https://api.cryndol.com/v1';
   
   // Current environment (change this to switch between dev and prod)

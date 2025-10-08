@@ -185,45 +185,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     
                     const SizedBox(height: 32),
                     
-                    // Demo Credentials Info
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 24,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Demo Mode',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Use any email and password to sign in',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    
-              const SizedBox(height: 32),
-                    
                     // Sign Up Link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

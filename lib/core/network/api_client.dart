@@ -30,15 +30,25 @@ class ApiClient {
     T Function(dynamic)? fromJson,
   }) async {
     try {
+      final url = '$baseUrl$endpoint';
+      final headers = _getHeaders(token: token);
+      
+      print('GET Request to: $url');
+      print('Headers: $headers');
+      
       final response = await _client
           .get(
-            Uri.parse('$baseUrl$endpoint'),
-            headers: _getHeaders(token: token),
+            Uri.parse(url),
+            headers: headers,
           )
           .timeout(timeout);
 
+      print('GET Response Status: ${response.statusCode}');
+      print('GET Response Body: ${response.body}');
+
       return _handleResponse<T>(response, fromJson);
     } catch (e) {
+      print('GET Request Error: $e');
       return ApiResponse<T>(
         success: false,
         message: 'Network error: ${e.toString()}',
@@ -134,9 +144,32 @@ class ApiClient {
   ) {
     try {
       final jsonData = json.decode(response.body);
+      print('API Client: Parsed JSON data: $jsonData');
+      print('API Client: JSON data type: ${jsonData.runtimeType}');
       
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        return ApiResponse<T>.fromJson(jsonData, fromJson);
+        // Check if the response has the standard API format with 'success' field
+        if (jsonData is Map<String, dynamic> && jsonData.containsKey('success')) {
+          print('API Client: Standard API response format detected');
+          return ApiResponse<T>.fromJson(jsonData, fromJson);
+        } else {
+          // Direct data response (like dashboard endpoint)
+          print('API Client: Direct data response format detected');
+          try {
+            final data = fromJson != null ? fromJson(jsonData) : jsonData as T;
+            return ApiResponse<T>(
+              success: true,
+              message: 'Success',
+              data: data,
+            );
+          } catch (e) {
+            print('API Client: Error parsing direct response: $e');
+            return ApiResponse<T>(
+              success: false,
+              message: 'Failed to parse response data: $e',
+            );
+          }
+        }
       } else {
         return ApiResponse<T>(
           success: false,
@@ -145,6 +178,7 @@ class ApiClient {
         );
       }
     } catch (e) {
+      print('API Client: JSON parsing error: $e');
       return ApiResponse<T>(
         success: false,
         message: 'Failed to parse response: ${e.toString()}',

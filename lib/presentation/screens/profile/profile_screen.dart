@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../providers/theme_provider.dart';
 import '../../widgets/common/custom_button.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -38,24 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        centerTitle: true,
-        actions: [
-          Consumer<ThemeProvider>(
-            builder: (context, themeProvider, child) {
-              return IconButton(
-                icon: Icon(
-                  themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                ),
-                onPressed: () => themeProvider.toggleTheme(),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Consumer<AuthProvider>(
+    return Consumer<AuthProvider>(
         builder: (context, authProvider, child) {
           final user = authProvider.user;
           
@@ -167,45 +149,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 
                 const SizedBox(height: 24),
                 
-                // Demo Info
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 24,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Demo Mode',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'You are currently using the app in demo mode. Your data is stored locally.',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                
-                const SizedBox(height: 32),
-                
                 // Sign Out Button
                 CustomButton(
                   text: 'Sign Out',
@@ -219,7 +162,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }

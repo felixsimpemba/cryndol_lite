@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/common/main_navigation.dart';
-import 'landing_screen.dart';
+import 'login_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -25,7 +25,9 @@ class AuthWrapper extends StatelessWidget {
           
           case AuthStatus.unauthenticated:
           case AuthStatus.error:
-            return const LandingScreen();
+            // If coming from sign out, go directly to login screen
+            // Otherwise show landing screen for new users
+            return const LoginScreen();
         }
       },
     );

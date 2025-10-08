@@ -1,5 +1,31 @@
 # API Endpoints Specification
 
+## Dashboard
+
+### GET `/dashboard/summary`
+- **Auth**: Bearer token required
+- **Purpose**: Returns aggregated stats and trend data for the dashboard.
+- **Response (200)**:
+```json
+{
+  "totalBorrowers": 128,
+  "totalLoans": 452,
+  "totalOutstandingAmount": 54230.50,
+  "totalPaidAmount": 123400.75,
+  "currentBalance": 15320.00,
+  "loansDueInNext7Days": 17,
+  "profitTrend": [
+    {"date": "2025-09-01", "amount": 320.50},
+    {"date": "2025-09-02", "amount": 410.00}
+  ]
+}
+```
+
+### Notes
+- `profitTrend` is a daily (or weekly) series of realized profit amounts.
+- `currentBalance` should represent the available business cash balance after payouts/expenses.
+- `loansDueInNext7Days` counts active loans with next scheduled payment due within 7 days.
+
 ## Base URL
 ```
 https://api.cryndol.com/v1
